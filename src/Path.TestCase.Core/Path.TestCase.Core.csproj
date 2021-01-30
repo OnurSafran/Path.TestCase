@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="CQRS" />
+      <Folder Include="Interfaces" />
+      <Folder Include="Models\Entities" />
+      <Folder Include="Models\Enums" />
+      <Folder Include="Models\Exceptions" />
+      <Folder Include="Notifications" />
+    </ItemGroup>
+
+</Project>
