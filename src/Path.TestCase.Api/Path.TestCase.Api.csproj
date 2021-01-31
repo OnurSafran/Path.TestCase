@@ -2,21 +2,24 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <LangVersion>8</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+      <Folder Include="Extensions\Host" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
-      <Folder Include="Extensions\Application" />
-      <Folder Include="Extensions\Configuration" />
-      <Folder Include="Extensions\Host" />
-      <Folder Include="Filters" />
-      <Folder Include="Middlewares" />
-      <Folder Include="Options" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+      <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Path.TestCase.Core\Path.TestCase.Core.csproj" />
+    </ItemGroup>
+
 
 </Project>
