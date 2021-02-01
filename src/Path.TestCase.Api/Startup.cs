@@ -28,8 +28,13 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Path.TestCase.Api {
 	public class Startup {
-		public Startup(IConfiguration configuration) {
-			Configuration = configuration;
+		public Startup(IConfiguration configuration, IWebHostEnvironment env) {
+			Configuration = new ConfigurationBuilder()
+				.AddConfiguration(configuration)
+				.AddEnvironmentVariables()
+				.AddJsonFile("appsettings.json", true, true)
+				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
+				.Build();
 		}
 
 		public IConfiguration Configuration { get; }

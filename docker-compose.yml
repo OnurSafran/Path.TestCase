@@ -1,0 +1,54 @@
+version: "2.2"
+
+services:
+  path-onur-safran:
+    container_name: path-onur-safran
+    image: path:latest
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+      - postgres
+    ports:
+      - "9901:80"
+    networks:
+      - default
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    command: redis-server --requirepass pass123
+    environment:
+      - "REDIS_URL=http://localhost:6379"
+    volumes:
+      - "redisdata:/data"
+    ports:
+      - "6379:6379"
+    networks:
+      - default
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - "5434:5432"
+    restart: always
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=postgres"
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    networks:
+      - default
+networks:
+  default:
+    driver: bridge
+volumes:
+  postgresdata:
+    driver: local
+  redisdata:
+    driver: local
