@@ -1,10 +1,10 @@
-﻿using MediatR;
-using Path.TestCase.Core.Models.Entities;
+﻿using System;
+using MediatR;
+using Path.TestCase.Core.Models.Cache;
 
 namespace Path.TestCase.Application.Notifications.ReceiveMessageNotification {
 	public class ReceiveMessageNotification : INotification {
 		public string RoomId { get; set; }
-		public string Message { get; set; }
-		public User User { get; set; }
+		public CacheMessage CacheMessage { get; set; }
 	}
 }

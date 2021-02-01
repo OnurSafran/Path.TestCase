@@ -7,6 +7,8 @@ COPY src/Path.TestCase.Api/Path.TestCase.Api.csproj ./src/Path.TestCase.Api/
 COPY src/Path.TestCase.Core/Path.TestCase.Core.csproj ./src/Path.TestCase.Core/
 COPY src/Path.TestCase.Application/Path.TestCase.Application.csproj ./src/Path.TestCase.Application/
 COPY src/Path.TestCase.Infrastructure/Path.TestCase.Infrastructure.csproj ./src/Path.TestCase.Infrastructure/
+COPY src/Path.TestCase.IntegrationTest/Path.TestCase.IntegrationTest.csproj ./test/Path.TestCase.IntegrationTest/
+COPY src/Path.TestCase.UnitTest/Path.TestCase.UnitTest.csproj ./test/Path.TestCase.UnitTest/
 RUN dotnet restore
 
 # Copy everything else and build
@@ -14,6 +16,8 @@ COPY src/Path.TestCase.Api/. ./Path.TestCase.Api
 COPY src/Path.TestCase.Core/. ./Path.TestCase.Core
 COPY src/Path.TestCase.Application/. ./Path.TestCase.Application
 COPY src/Path.TestCase.Infrastructure/. ./Path.TestCase.Infrastructure
+COPY src/Path.TestCase.IntegrationTest/. ./Path.TestCase.IntegrationTest
+COPY src/Path.TestCase.UnitTest/. ./Path.TestCase.UnitTest
 
 WORKDIR /app/Path.TestCase.Api
 RUN dotnet publish -c Release -o out

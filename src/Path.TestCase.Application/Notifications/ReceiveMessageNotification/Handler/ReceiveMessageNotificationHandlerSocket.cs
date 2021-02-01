@@ -19,7 +19,9 @@ namespace Path.TestCase.Application.Notifications.ReceiveMessageNotification.Han
 		}
 
 		public async Task Handle(ReceiveMessageNotification notification, CancellationToken cancellationToken) {
-			await _hubContext.Clients.Group(notification.RoomId).ReceiveMessage(_mapper.Map<MessageResponse>(notification));
+			// Send Message To Room Group
+			await _hubContext.Clients.Group(notification.RoomId)
+				.ReceiveMessage(_mapper.Map<MessageResponse>(notification.CacheMessage));
 		}
 	}
 }

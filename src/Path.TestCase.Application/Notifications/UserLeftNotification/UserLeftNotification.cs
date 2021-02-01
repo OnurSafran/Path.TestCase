@@ -1,9 +1,10 @@
-﻿using MediatR;
-using Path.TestCase.Core.Models.Entities;
+﻿using System;
+using MediatR;
 
 namespace Path.TestCase.Application.Notifications.UserLeftNotification {
 	public class UserLeftNotification : INotification {
+		public string ConnectionId { get; set; }
 		public string RoomId { get; set; }
-		public User User { get; set; }
+		public string NickName { get; set; }
 	}
 }

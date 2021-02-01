@@ -19,6 +19,11 @@ namespace Path.TestCase.Application.Notifications.UserLeftNotification.Handler {
 		}
 
 		public async Task Handle(UserLeftNotification notification, CancellationToken cancellationToken) {
+			// Remove From Room Group
+			await _hubContext.Groups.RemoveFromGroupAsync(notification.ConnectionId, notification.RoomId,
+				cancellationToken);
+
+			// Send Notification to All
 			await _hubContext.Clients.Group(notification.RoomId).UserLeft(_mapper.Map<UserResponse>(notification));
 		}
 	}
