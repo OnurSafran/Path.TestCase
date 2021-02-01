@@ -26,7 +26,7 @@ namespace Path.TestCase.Api.Extensions.Configuration {
 			//
 			// services.AddScoped<ICacheDatabase, CacheDatabase>();
 		}
-		
+
 		public static void VersioningSetup(this IServiceCollection services) {
 			services.CustomAddVersionedApiExplorer();
 			services.AddApiVersioning(cfg => {

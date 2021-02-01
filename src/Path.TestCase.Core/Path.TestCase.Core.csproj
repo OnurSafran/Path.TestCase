@@ -5,12 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="CQRS" />
-      <Folder Include="Interfaces" />
-      <Folder Include="Models\Entities" />
       <Folder Include="Models\Enums" />
       <Folder Include="Models\Exceptions" />
-      <Folder Include="Notifications" />
     </ItemGroup>
 
 </Project>

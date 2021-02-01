@@ -30,9 +30,9 @@ namespace Path.TestCase.Api.Middlewares {
 
 				if (context.Response.StatusCode != StatusCodes.Status200OK)
 					return;
-					
+
 				var objResult = JsonConvert.DeserializeObject(readToEnd);
-					
+
 				context.Response.ContentType = "application/json";
 				await context.Response.WriteAsync(
 					JsonConvert.SerializeObject(

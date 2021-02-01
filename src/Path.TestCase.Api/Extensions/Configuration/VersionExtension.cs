@@ -11,7 +11,7 @@ namespace Path.TestCase.Api.Extensions.Configuration {
 					//Tells swagger to replace the version in the controller route  
 					options.SubstituteApiVersionInUrl = true;
 				});
-			
+
 			services.AddSwaggerGen(options => { options.OperationFilter<SwaggerDefaultValues>(); });
 		}
 	}
