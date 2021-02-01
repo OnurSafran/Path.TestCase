@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -40,7 +36,7 @@ namespace Path.TestCase.Api {
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services) {
+		public void ConfigureServices(IServiceCollection services, IConfiguration configuration) {
 			services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 			services.AddCors(options => {
@@ -56,13 +52,16 @@ namespace Path.TestCase.Api {
 			services.VersioningSetup();
 
 			// Add AutoMapper
-			services.AddAutoMapper(typeof(HubProfile));
+			services.AddAutoMapper(typeof(CacheProfile));
 
 			// Add MediatR
 			services.AddMediatR(typeof(SendMessageHandler));
 
-			// Add SignalR
-			services.AddSignalR();
+			// Redis
+			services.CacheSetup(configuration);
+
+			// Add SignalR with Redis scale out	
+			services.AddSignalR().AddStackExchangeRedis(Configuration.GetConnectionString("Redis"));
 
 			// Add Controller Endpoints
 			services.AddControllers(opts => { opts.Filters.Add(typeof(ModelStateFilter), int.MinValue); });
@@ -80,6 +79,8 @@ namespace Path.TestCase.Api {
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+			app.UseStaticFiles();
 
 			app.UseCors("ChatApp");
 

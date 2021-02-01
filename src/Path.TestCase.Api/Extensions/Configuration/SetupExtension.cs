@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Path.TestCase.Application.Cache;
+using Path.TestCase.Core.Interfaces;
+using Path.TestCase.Infrastructure.Cache;
+using Path.TestCase.Infrastructure.Cache.Base;
+using Path.TestCase.Infrastructure.Interfaces;
 
 namespace Path.TestCase.Api.Extensions.Configuration {
 	public static class SetupExtension {
@@ -20,11 +25,12 @@ namespace Path.TestCase.Api.Extensions.Configuration {
 		}
 
 		public static void CacheSetup(this IServiceCollection services, IConfiguration configuration) {
-			// services.AddStackExchangeRedisCache(action => {
-			// 	action.Configuration = configuration.GetConnectionString("REDIS_URL");
-			// });
-			//
-			// services.AddScoped<ICacheDatabase, CacheDatabase>();
+			services.AddStackExchangeRedisCache(action => {
+				action.Configuration = configuration.GetConnectionString("REDIS_URL");
+			});
+
+			services.AddScoped<ICacheDatabase, CacheDatabase>();
+			services.AddScoped<IChatCacheModule, ChatCacheModule>();
 		}
 
 		public static void VersioningSetup(this IServiceCollection services) {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Path.TestCase.Application.Interfaces {
+namespace Path.TestCase.Core.Interfaces {
 	public interface IChatHub {
 		Task SendMessage(string message);
 
