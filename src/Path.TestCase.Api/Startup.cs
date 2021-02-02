@@ -1,4 +1,3 @@
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +17,6 @@ using Path.TestCase.Api.Middlewares;
 using Path.TestCase.Api.Options;
 using Path.TestCase.Application.CQRS.Command.Handler;
 using Path.TestCase.Application.Hubs;
-using Path.TestCase.Application.Map;
 using Path.TestCase.Core.Interfaces;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -51,8 +49,8 @@ namespace Path.TestCase.Api {
 			// Versioning
 			services.VersioningSetup();
 
-			// Add AutoMapper
-			services.AddAutoMapper(typeof(CacheProfile));
+			// Add AutoMapper SORUN ÇIKARTTI
+			//services.AddAutoMapper(typeof(CacheProfile));
 
 			// Add MediatR
 			services.AddMediatR(typeof(SendMessageHandler));

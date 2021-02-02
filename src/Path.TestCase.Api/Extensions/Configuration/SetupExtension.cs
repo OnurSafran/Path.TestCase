@@ -26,7 +26,7 @@ namespace Path.TestCase.Api.Extensions.Configuration {
 
 		public static void CacheSetup(this IServiceCollection services, IConfiguration configuration) {
 			services.AddStackExchangeRedisCache(action => {
-				action.Configuration = configuration.GetConnectionString("REDIS_URL");
+				action.Configuration = configuration.GetConnectionString("Redis");
 			});
 
 			services.AddScoped<ICacheDatabase, CacheDatabase>();

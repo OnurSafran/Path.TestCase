@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Path.TestCase.Application.Notifications.UserDisconnectedNotification;
 using Path.TestCase.Core.Interfaces;
+using Path.TestCase.Core.Models.Cache;
 
 namespace Path.TestCase.Application.CQRS.Command.Handler {
 	public class OnDisconnectCommandHandler : IRequestHandler<OnDisconnectCommand, bool> {
@@ -17,8 +18,15 @@ namespace Path.TestCase.Application.CQRS.Command.Handler {
 
 		public async Task<bool> Handle(OnDisconnectCommand request, CancellationToken cancellationToken) {
 			// Get User from Cache
-			if (!await _chatCacheModule.ExistsUser(request.ConnectionId, cancellationToken))
+			CacheUser cacheUser = await _chatCacheModule.GetUserAsync(request.ConnectionId, cancellationToken);
+			if (cacheUser == null)
 				throw new Exception("User doesnt exist");
+
+			// Leave From Previous Room
+			if (cacheUser.ConnectedRoomId != null)
+				await _mediator.Send(
+					new LeaveFromRoomCommand() {ConnectionId = request.ConnectionId, DateTime = request.DateTime},
+					cancellationToken);
 
 			// Logout
 			await _chatCacheModule.RemoveUserAsync(request.ConnectionId, cancellationToken);

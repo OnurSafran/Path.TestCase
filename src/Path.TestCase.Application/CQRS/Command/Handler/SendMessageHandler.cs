@@ -27,14 +27,17 @@ namespace Path.TestCase.Application.CQRS.Command.Handler {
 				throw new Exception("User didnt join any room. Please join to a room");
 			CacheRoom cacheRoom = await _chatCacheModule.GetRoomAsync(cacheUser.ConnectedRoomId, cancellationToken);
 
+			// Set Room Message
+			CacheMessage cacheMessage = new CacheMessage() {
+				Message = request.Message, DateTime = request.DateTime, SenderNickName = cacheUser.NickName
+			};
+			cacheRoom.Messages.Add(cacheMessage);
+			await _chatCacheModule.SetRoomAsync(cacheRoom, cancellationToken);
+
 			// Publish
 			await _mediator.Publish(
-				new ReceiveMessageNotification() {
-					RoomId = cacheUser.ConnectedRoomId,
-					CacheMessage = new CacheMessage() {
-						DateTime = request.DateTime, Message = request.Message, SenderNickName = cacheUser.NickName
-					}
-				}, cancellationToken);
+				new ReceiveMessageNotification() {RoomId = cacheUser.ConnectedRoomId, CacheMessage = cacheMessage},
+				cancellationToken);
 
 			return await Task.FromResult(true);
 		}

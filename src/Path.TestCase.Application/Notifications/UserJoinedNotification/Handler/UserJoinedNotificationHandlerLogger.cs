@@ -4,7 +4,8 @@ using MediatR;
 
 namespace Path.TestCase.Application.Notifications.UserJoinedNotification.Handler {
 	public class UserJoinedNotificationHandlerLogger : INotificationHandler<UserJoinedNotification> {
-		public async Task Handle(UserJoinedNotification notification, CancellationToken cancellationToken) {
+		public Task Handle(UserJoinedNotification notification, CancellationToken cancellationToken) {
+			return Task.CompletedTask;
 		}
 	}
 }

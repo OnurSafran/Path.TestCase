@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using Path.TestCase.Application.Models.Response;
 using Path.TestCase.Application.Notifications.UserJoinedNotification;
@@ -10,18 +9,16 @@ using Path.TestCase.Core.Interfaces;
 using Path.TestCase.Core.Models.Cache;
 
 namespace Path.TestCase.Application.CQRS.Command.Handler {
-	public class JoinToRoomHandler : IRequestHandler<JoinToRoomCommand, RoomResponse> {
+	public class JoinToRoomHandler : IRequestHandler<JoinToRoomCommand, CacheRoom> {
 		private readonly IMediator _mediator;
 		private readonly IChatCacheModule _chatCacheModule;
-		private readonly IMapper _mapper;
 
-		public JoinToRoomHandler(IMediator mediator, IChatCacheModule chatCacheModule, IMapper mapper) {
+		public JoinToRoomHandler(IMediator mediator, IChatCacheModule chatCacheModule) {
 			_mediator = mediator;
 			_chatCacheModule = chatCacheModule;
-			_mapper = mapper;
 		}
 
-		public async Task<RoomResponse> Handle(JoinToRoomCommand request, CancellationToken cancellationToken) {
+		public async Task<CacheRoom> Handle(JoinToRoomCommand request, CancellationToken cancellationToken) {
 			// Get User from Cache
 			CacheUser cacheUser = await _chatCacheModule.GetUserAsync(request.ConnectionId, cancellationToken);
 			if (cacheUser == null)
@@ -30,7 +27,7 @@ namespace Path.TestCase.Application.CQRS.Command.Handler {
 			// Leave From Previous Room
 			if (cacheUser.ConnectedRoomId != null)
 				await _mediator.Send(
-					new LeaveRoomCommand() {ConnectionId = request.ConnectionId, DateTime = request.DateTime},
+					new LeaveFromRoomCommand() {ConnectionId = request.ConnectionId, DateTime = request.DateTime},
 					cancellationToken);
 
 			// Update User's Room
@@ -47,9 +44,7 @@ namespace Path.TestCase.Application.CQRS.Command.Handler {
 				, cancellationToken);
 
 			// Get Room
-			var cacheRoom = await _chatCacheModule.GetRoomAsync(request.RoomId, cancellationToken);
-			
-			return _mapper.Map<RoomResponse>(cacheRoom);
+			return await _chatCacheModule.GetRoomAsync(request.RoomId, cancellationToken);
 		}
 	}
 }
