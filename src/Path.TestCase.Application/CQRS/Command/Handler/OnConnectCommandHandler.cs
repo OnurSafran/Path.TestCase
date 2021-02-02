@@ -30,7 +30,7 @@ namespace Path.TestCase.Application.CQRS.Command.Handler {
 
 			// Publish
 			await _mediator.Publish(
-				new UserConnectedNotification() {ConnectionId = request.ConnectionId}, cancellationToken);
+				new UserConnectedNotification() {ConnectionId = request.ConnectionId, NickName = request.NickName}, cancellationToken);
 
 			// Get Room List Then Hide Messages
 			List<CacheRoom> cacheRooms = await _chatCacheModule.GetActiveRoomsAsync(cancellationToken);
