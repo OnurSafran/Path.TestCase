@@ -58,8 +58,11 @@ namespace Path.TestCase.Api {
 			// Redis
 			services.CacheSetup(Configuration);
 
+			// Postgres
+			services.DbSetup(Configuration);
+
 			// Add SignalR with Redis scale out	
-			services.AddSignalR().AddStackExchangeRedis(Configuration.GetConnectionString("Redis"));
+			services.AddSignalR().AddStackExchangeRedis(Configuration.GetConnectionString("REDIS_URL"));
 
 			// Add Controller Endpoints
 			services.AddControllers(opts => { opts.Filters.Add(typeof(ModelStateFilter), int.MinValue); });

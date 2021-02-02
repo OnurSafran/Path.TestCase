@@ -36,7 +36,9 @@ namespace Path.TestCase.Application.CQRS.Command.Handler {
 
 			// Publish
 			await _mediator.Publish(
-				new ReceiveMessageNotification() {RoomId = cacheUser.ConnectedRoomId, CacheMessage = cacheMessage},
+				new ReceiveMessageNotification() {
+					RoomId = cacheUser.ConnectedRoomId, ConnectionId = request.ConnectionId, CacheMessage = cacheMessage
+				},
 				cancellationToken);
 
 			return await Task.FromResult(true);

@@ -16,20 +16,20 @@ services:
     ports:
       - "9901:80"
     networks:
-      - default
+      - path-test-case
   redis:
     container_name: redis
     image: redis:latest
     restart: always
     command: redis-server --requirepass pass123
     environment:
-      - "REDIS_URL=http://localhost:6379"
+      - "REDIS_URL=localhost:6379"
     volumes:
       - "redisdata:/data"
     ports:
       - "6379:6379"
     networks:
-      - default
+      - path-test-case
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -43,9 +43,9 @@ services:
     volumes:
       - postgresdata:/var/lib/postgresql/data
     networks:
-      - default
+      - path-test-case
 networks:
-  default:
+  path-test-case:
     driver: bridge
 volumes:
   postgresdata:

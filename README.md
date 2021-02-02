@@ -2,10 +2,10 @@
 
 Builds, (re)creates, starts, and attaches to containers for a service. Run containers in the background.
 
-Execute "docker-compose up -d" on Api
+- Execute "docker-compose up -d" on Path.TestCase.Api
 
-dotnet ef migrations add initialMigration --startup-project ../src/Path.TestCase.Api/Path.TestCase.Api.csproj
-dotnet ef database update --startup-project ../src/Path.TestCase.Api/Path.TestCase.Api.csproj
+- dotnet ef migrations add initialMigration --startup-project ../Path.TestCase.Api/Path.TestCase.Api.csproj
+- dotnet ef database update --startup-project ../Path.TestCase.Api/Path.TestCase.Api.csproj
 
 Run tests while docker container is active and running
 
@@ -22,10 +22,10 @@ Run tests while docker container is active and running
 - Swagger
 - MediatR
 - SignalR
-- AutoMapper
 - Redis
 - Postgres
 
+## Not in use
 - Api Versioning
 - ResponseWrapper
 - ModelStateValidation
