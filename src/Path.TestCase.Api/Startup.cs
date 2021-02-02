@@ -36,7 +36,7 @@ namespace Path.TestCase.Api {
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services, IConfiguration configuration) {
+		public void ConfigureServices(IServiceCollection services) {
 			services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 			services.AddCors(options => {
@@ -58,7 +58,7 @@ namespace Path.TestCase.Api {
 			services.AddMediatR(typeof(SendMessageHandler));
 
 			// Redis
-			services.CacheSetup(configuration);
+			services.CacheSetup(Configuration);
 
 			// Add SignalR with Redis scale out	
 			services.AddSignalR().AddStackExchangeRedis(Configuration.GetConnectionString("Redis"));

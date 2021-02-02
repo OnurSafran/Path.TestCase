@@ -1,23 +1,27 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
+using Path.TestCase.Application.Models.Response;
 using Path.TestCase.Application.Notifications.UserJoinedNotification;
 using Path.TestCase.Core.Interfaces;
 using Path.TestCase.Core.Models.Cache;
 
 namespace Path.TestCase.Application.CQRS.Command.Handler {
-	public class EnterToRoomHandler : IRequestHandler<EnterToRoomCommand, bool> {
+	public class JoinToRoomHandler : IRequestHandler<JoinToRoomCommand, RoomResponse> {
 		private readonly IMediator _mediator;
 		private readonly IChatCacheModule _chatCacheModule;
+		private readonly IMapper _mapper;
 
-		public EnterToRoomHandler(IMediator mediator, IChatCacheModule chatCacheModule) {
+		public JoinToRoomHandler(IMediator mediator, IChatCacheModule chatCacheModule, IMapper mapper) {
 			_mediator = mediator;
 			_chatCacheModule = chatCacheModule;
+			_mapper = mapper;
 		}
 
-		public async Task<bool> Handle(EnterToRoomCommand request, CancellationToken cancellationToken) {
+		public async Task<RoomResponse> Handle(JoinToRoomCommand request, CancellationToken cancellationToken) {
 			// Get User from Cache
 			CacheUser cacheUser = await _chatCacheModule.GetUserAsync(request.ConnectionId, cancellationToken);
 			if (cacheUser == null)
@@ -42,8 +46,10 @@ namespace Path.TestCase.Application.CQRS.Command.Handler {
 				}
 				, cancellationToken);
 
-			// Notification User Entered
-			return await Task.FromResult(true);
+			// Get Room
+			var cacheRoom = await _chatCacheModule.GetRoomAsync(request.RoomId, cancellationToken);
+			
+			return _mapper.Map<RoomResponse>(cacheRoom);
 		}
 	}
 }

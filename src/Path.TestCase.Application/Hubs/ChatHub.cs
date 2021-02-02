@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Path.TestCase.Application.CQRS.Command;
 using Path.TestCase.Application.Interfaces;
+using Path.TestCase.Application.Models.Response;
 using Path.TestCase.Core.Interfaces;
 
 namespace Path.TestCase.Application.Hubs {
@@ -20,8 +22,8 @@ namespace Path.TestCase.Application.Hubs {
 			});
 		}
 
-		public async Task EnterToRoom(string roomId) {
-			await _mediator.Send(new EnterToRoomCommand() {
+		public async Task<RoomResponse> JoinToRoom(string roomId) {
+			return await _mediator.Send(new JoinToRoomCommand() {
 				ConnectionId = Context.ConnectionId, RoomId = roomId, DateTime = DateTime.Now
 			});
 		}
@@ -30,8 +32,8 @@ namespace Path.TestCase.Application.Hubs {
 			await _mediator.Send(new LeaveRoomCommand() {ConnectionId = Context.ConnectionId, DateTime = DateTime.Now});
 		}
 
-		public async Task OnConnect(string nickName) {
-			await _mediator.Send(new OnConnectCommand() {
+		public async Task<List<RoomResponse>> OnConnect(string nickName) {
+			return await _mediator.Send(new OnConnectCommand() {
 				ConnectionId = Context.ConnectionId, NickNme = nickName, DateTime = DateTime.Now
 			});
 		}

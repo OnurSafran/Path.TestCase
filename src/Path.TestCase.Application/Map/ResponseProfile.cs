@@ -11,6 +11,7 @@ namespace Path.TestCase.Application.Map {
 			CreateMap<UserLeftNotification, UserResponse>();
 			CreateMap<UserConnectedNotification, UserResponse>();
 			CreateMap<CacheMessage, MessageResponse>();
+			CreateMap<CacheRoom, RoomResponse>();
 		}
 	}
 }
